@@ -55,12 +55,12 @@ with st.sidebar:
     st.header("⚙️ Cấu hình Agent")
     provider_name = st.selectbox(
         "Model Provider",
-        options=["gemini", "openrouter", "openai", "anthropic"],
+        options=["gemini", "openai_compatible", "openrouter", "openai", "anthropic"],
         index=0,
     )
     version_label = st.selectbox(
         "Artifact Version",
-        options=["v0", "v1", "v2", "v3"],
+        options=["v3", "v2", "v1", "v0"],
         index=0,
     )
     model_override = st.text_input("Model Override (bỏ trống để dùng mặc định)", value="")
