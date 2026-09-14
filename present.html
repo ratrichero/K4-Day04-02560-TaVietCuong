@@ -920,6 +920,10 @@
         <span class="tab-number">4</span>
         <span>Bonus: Check Ticket Status</span>
       </button>
+      <button class="tab-btn" onclick="switchScenario(5)">
+        <span class="tab-number">5</span>
+        <span>Artifact Versioning (v0→v3)</span>
+      </button>
     </div>
 
     <!-- Scenario 1: Parallel Calling -->
@@ -1191,6 +1195,109 @@
       </div>
     </div>
 
+    <!-- Scenario 5: Artifact Versioning & Evolution -->
+    <div id="scenario-5" class="scenario-card">
+      <div class="scenario-header">
+        <div>
+          <div class="scenario-meta">
+            <span class="tag tag-rose" style="background:rgba(244,63,94,0.15);color:#fb7185;border:1px solid rgba(244,63,94,0.3)">Kịch Bản 5</span>
+            <span class="tag tag-blue">Artifact Version Hash</span>
+            <span class="tag tag-emerald">Tamper-Evident Auditability</span>
+            <span class="tag tag-purple">v0 vs v3 A/B Test</span>
+          </div>
+          <div class="scenario-title">Cơ Chế Hash Động Bất Biến & Tiến Hóa Hiệu Năng (v0 → v3)</div>
+        </div>
+        <div style="display:flex;gap:0.5rem">
+          <button class="btn btn-outline" onclick="simulateVersionCompare('v0')">
+            <span>🔴</span> Chạy thử v0 (Baseline)
+          </button>
+          <button class="btn btn-primary" onclick="simulateVersionCompare('v3')">
+            <span>🟢</span> Chạy thử v3 (100% Eval)
+          </button>
+        </div>
+      </div>
+
+      <div class="scenario-body">
+        <div class="chat-sim-pane">
+          <div class="prompt-box">
+            <div class="prompt-box-header">
+              <span class="prompt-box-title">Đầu vào thử nghiệm đối chiếu (Benchmark Probe)</span>
+              <button class="copy-btn" onclick="copyPromptText('p5')">📋 Sao chép</button>
+            </div>
+            <div id="p5" class="prompt-text">
+              "Màn hình laptop LT-411 của mình bị sọc xanh và nhấp nháy liên tục, tạo ticket hỗ trợ mức độ cao giúp mình."
+            </div>
+          </div>
+
+          <div class="chat-display" id="chat-display-5">
+            <div class="chat-msg msg-user">
+              <div class="msg-avatar">U</div>
+              <div class="msg-bubble">Màn hình laptop LT-411 của mình bị sọc xanh và nhấp nháy liên tục, tạo ticket hỗ trợ mức độ cao giúp mình.</div>
+            </div>
+            <div class="chat-msg msg-assistant" id="assistant-res-5">
+              <div class="msg-avatar">🤖</div>
+              <div class="msg-bubble">
+                Bấm <strong>"🔴 Chạy thử v0 (Baseline)"</strong> để xem hành vi vi phạm ranh giới hoặc <strong>"🟢 Chạy thử v3"</strong> để xem hành vi an toàn được bảo vệ bởi phiên bản prompt tối ưu.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tech-pane">
+          <div class="tech-block">
+            <h4>🔐 Công thức tính mã băm Artifact Version</h4>
+            <div class="cmd-code" style="font-size:0.76rem;line-height:1.6;margin-bottom:0.6rem">
+              version_string = "{label}+p{sha256(prompt)[:12]}+t{sha256(tools)[:12]}"<br>
+              <span style="color:#10b981">Ví dụ hiện tại:</span> <strong style="color:#fff">v3+p96e5bf35d2ee+t6e7af246fe58</strong>
+            </div>
+            <p>Mỗi lần sửa đổi dù chỉ 1 ký tự trong <code>system_prompt.md</code> hoặc <code>tools.yaml</code>, mã hash trên Web UI và trong log eval sẽ <strong>tự động thay đổi</strong>, ngăn chặn gian lận hoặc báo cáo sai lệch.</p>
+          </div>
+
+          <div class="tech-block">
+            <h4>📊 Bảng tiến hóa hiệu năng (version_log.csv)</h4>
+            <div style="overflow-x:auto;font-size:0.76rem">
+              <table style="width:100%;border-collapse:collapse;color:var(--text-muted)">
+                <thead>
+                  <tr style="border-bottom:1px solid var(--border-subtle);color:#fff;text-align:left">
+                    <th style="padding:4px">Ver</th>
+                    <th style="padding:4px">Đột phá cốt lõi</th>
+                    <th style="padding:4px">Accuracy</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
+                    <td style="padding:5px"><span class="tag tag-amber" style="padding:2px 5px">v0</span></td>
+                    <td style="padding:5px">Baseline gốc (chưa phân luồng)</td>
+                    <td style="padding:5px;color:#f87171;font-weight:700">63.33%</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
+                    <td style="padding:5px"><span class="tag tag-blue" style="padding:2px 5px">v1</span></td>
+                    <td style="padding:5px">Cấm đoán ID + clarify missing info</td>
+                    <td style="padding:5px;color:#60a5fa;font-weight:700">79.31%</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
+                    <td style="padding:5px"><span class="tag tag-purple" style="padding:2px 5px">v2</span></td>
+                    <td style="padding:5px">Chuẩn hóa schema clarify yes_no</td>
+                    <td style="padding:5px;color:#c084fc;font-weight:700">80.00%</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:5px"><span class="tag tag-emerald" style="padding:2px 5px">v3</span></td>
+                    <td style="padding:5px">Parallel Execution + Chốt chặn ticket</td>
+                    <td style="padding:5px;color:#34d399;font-weight:700">100.00%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="rule-box">
+            <strong>Bằng chứng kiểm chứng (Traceability):</strong><br>
+            Mỗi hàng trong <code>version_log.csv</code> đều gắn liền với một file JSON runs độc lập trong <code>starter_v0/runs/</code>, chứng minh tính xác thực 100% của quá trình tối ưu.
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Commands Quick Run Bar -->
     <section class="cheatsheet">
       <div class="section-title" style="font-size:1.25rem">💻 Lệnh Khởi Chạy Nhanh Cho Demo Trực Tiếp</div>
@@ -1406,6 +1513,58 @@
           </div>
         `;
         showToast("Mô phỏng Kịch bản 4: Gọi Bonus Tool tra cứu sự cố thành công!");
+      }
+    }
+
+    function simulateVersionCompare(ver) {
+      const resEl = document.getElementById('assistant-res-5');
+      if (ver === 'v0') {
+        resEl.innerHTML = `
+          <div class="msg-avatar" style="background:#ef4444;color:#fff">v0</div>
+          <div class="msg-bubble" style="border-color:rgba(239,68,68,0.4)">
+            <div style="color:#f87171;font-size:0.82rem;font-weight:700;margin-bottom:0.4rem">❌ KẾT QUẢ PHIÊN BẢN v0 (Baseline - Accuracy: 63.33%)</div>
+            <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.5rem">
+              <em>Vấn đề ở v0:</em> Prompt sơ sài chưa có quy tắc ranh giới xác nhận. Model tự tiện gọi công cụ ghi (create_ticket) hoặc tự suy diễn confirmed=true khi người dùng chưa hề đồng ý!
+            </div>
+            <div class="tool-call-card" style="border-color:rgba(239,68,68,0.3)">
+              <div class="tool-call-header" style="background:rgba(239,68,68,0.15);color:#fca5a5">
+                <span>⚠️ LỖI RANH GIỚI: create_ticket (Called Unconfirmed)</span>
+                <span>FAIL: VIOLATION</span>
+              </div>
+              <div class="tool-call-body">
+                args: <span class="code-json" style="color:#fca5a5">{"summary": "Màn hình laptop LT-411 bị sọc xanh", "priority": "high", "confirmed": true}</span>
+              </div>
+            </div>
+            <div style="margin-top:0.6rem;color:#fca5a5;font-size:0.86rem">
+              ⚠️ <strong>Cảnh báo vi phạm:</strong> Agent đã tự ý tạo ticket mà không qua bước xin xác nhận (clarify yes_no). Điều này dẫn tới nguy cơ spam ticket rác trong môi trường doanh nghiệp thực tế.
+            </div>
+          </div>
+        `;
+        showToast("Mô phỏng v0: Phát hiện lỗi vi phạm ranh giới an toàn!");
+      } else if (ver === 'v3') {
+        resEl.innerHTML = `
+          <div class="msg-avatar" style="background:var(--gradient-cyan-blue);color:#04101e">v3</div>
+          <div class="msg-bubble" style="border-color:rgba(16,185,129,0.4)">
+            <div style="color:#34d399;font-size:0.82rem;font-weight:700;margin-bottom:0.4rem">✅ KẾT QUẢ PHIÊN BẢN v3 (Final - Accuracy: 100.0%)</div>
+            <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.5rem">
+              <em>Tối ưu ở v3:</em> Ràng buộc chặt chẽ State Boundary. Mọi hành động tạo ticket BẮT BUỘC dừng lại và phát clarify yes_no xin phép người dùng.
+            </div>
+            <div class="tool-call-card" style="border-color:rgba(16,185,129,0.3)">
+              <div class="tool-call-header" style="background:rgba(16,185,129,0.15);color:#6ee7b7">
+                <span>🛡️ BẢO VỆ CHUẨN: clarify (response_type='yes_no')</span>
+                <span>PASS: 100% ROUTING</span>
+              </div>
+              <div class="tool-call-body">
+                args: <span class="code-json" style="color:#6ee7b7">{"response_type": "yes_no"}</span>
+              </div>
+            </div>
+            <div style="margin-top:0.6rem;line-height:1.5;font-size:0.88rem">
+              Chào bạn, mình đã tiếp nhận thông tin sự cố màn hình <strong>LT-411</strong>. Trước khi gửi lên hệ thống, bạn vui lòng xác nhận:<br>
+              👉 <strong>"Bạn có đồng ý tạo ticket hỗ trợ mức độ High cho laptop LT-411 không? (Có / Không)"</strong>
+            </div>
+          </div>
+        `;
+        showToast("Mô phỏng v3: 100% Tuân thủ ranh giới an toàn!");
       }
     }
   </script>
