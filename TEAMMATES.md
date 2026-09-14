@@ -10,9 +10,9 @@
 | STT | Họ và Tên | MSSV | GitHub Username | Vai trò chính |
 |:---:|---|:---:|---|---|
 | 1 | **Tạ Việt Cường** | 02560 | `ratrichero` | **Prompt Architect / Team Lead** |
-| 2 | **Chung Văn Duy** | 02854 | `[github_username_duy]` | **Tool & Schema Engineer** |
+| 2 | **Chung Văn Duy** | 02854 | `CoderNVU` | **Tool & Schema Engineer** |
 | 3 | **Dương Đạt Khang** | 02624 | `khangduong2k4het-netizen` | **Eval & Red-Team Specialist** |
-| 4 | **Trần Ngọc Chinh** | 02720 | `[github_username_chinh]` | **UI & Report Coordinator** |
+| 4 | **Trần Ngọc Chinh** | 02720 | `Chinhdz108` | **UI & Report Coordinator** |
 
 ---
 
