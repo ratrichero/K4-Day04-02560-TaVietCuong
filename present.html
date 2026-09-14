@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Helpdesk Agent — Interactive Demo Showcase</title>
+  <meta name="description" content="Kịch bản trình chiếu tương tác cho 4 kịch bản demo hệ thống IT Helpdesk Agent - Day 04 Lab">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0a0e1a;
+      --bg-card: rgba(18, 25, 43, 0.75);
+      --bg-card-hover: rgba(24, 34, 58, 0.9);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(0, 210, 255, 0.3);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-cyan: #00e5ff;
+      --accent-blue: #3b82f6;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-purple: #a855f7;
+      --accent-rose: #f43f5e;
+      --gradient-cyan-blue: linear-gradient(135deg, #00e5ff 0%, #3b82f6 100%);
+      --gradient-purple-pink: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+      --gradient-amber-rose: linear-gradient(135deg, #f59e0b 0%, #f43f5e 100%);
+      --gradient-emerald-cyan: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+      --glow-shadow: 0 8px 32px 0 rgba(0, 229, 255, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(0, 229, 255, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.08) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(15, 23, 42, 0.5) 0px, transparent 100%);
+      background-attachment: fixed;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-base);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    /* Header & Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--gradient-cyan-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-title span {
+      background: var(--gradient-cyan-blue);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--gradient-cyan-blue);
+      color: #04101e;
+      box-shadow: 0 4px 14px rgba(0, 229, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 229, 255, 0.5);
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      border-color: var(--border-subtle);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Hero Banner */
+    .hero {
+      text-align: center;
+      margin-bottom: 3.5rem;
+      padding: 2.5rem 1rem;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.9rem;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      border-radius: 9999px;
+      color: var(--accent-cyan);
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-cyan);
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 span {
+      background: var(--gradient-cyan-blue);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 2rem;
+    }
+
+    /* Metric Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      backdrop-filter: blur(12px);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-3px);
+      box-shadow: var(--glow-shadow);
+    }
+
+    .stat-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gradient-cyan-blue);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .stat-card:hover::after {
+      opacity: 1;
+    }
+
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: #fff;
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+
+    .stat-badge {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 700;
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--accent-emerald);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+      font-weight: 500;
+    }
+
+    /* Team Section Bar */
+    .team-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.25rem 1.75rem;
+      margin-bottom: 3rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .team-member {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--accent-cyan);
+    }
+
+    .member-info h4 {
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .member-info p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Scenario Showcase Section */
+    .section-header {
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* Tabs */
+    .scenario-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 0.4rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 1.75rem;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 220px;
+      padding: 0.85rem 1rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.88rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .tab-btn.active {
+      background: var(--bg-card);
+      color: var(--accent-cyan);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+    }
+
+    .tab-number {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: inherit;
+    }
+
+    .tab-btn.active .tab-number {
+      background: var(--gradient-cyan-blue);
+      color: #04101e;
+      font-weight: 700;
+    }
+
+    /* Scenario Detail Content Layout */
+    .scenario-card {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .scenario-card.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .scenario-header {
+      padding: 1.75rem 2rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .scenario-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .tag {
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .tag-blue {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .tag-purple {
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    .tag-amber {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .tag-emerald {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .scenario-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .scenario-body {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      divide-x: 1px solid var(--border-subtle);
+    }
+
+    /* Left side: Interactive Chat Simulation */
+    .chat-sim-pane {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .prompt-box {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.25rem;
+      position: relative;
+    }
+
+    .prompt-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .prompt-box-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .prompt-text {
+      font-size: 0.98rem;
+      color: #e2e8f0;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .sim-controls {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    /* Chat Messages Container */
+    .chat-display {
+      background: rgba(10, 14, 26, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-height: 280px;
+    }
+
+    .chat-msg {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      animation: msgPop 0.25s ease;
+    }
+
+    @keyframes msgPop {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .msg-user .msg-avatar {
+      background: #334155;
+      color: #cbd5e1;
+    }
+
+    .msg-assistant .msg-avatar {
+      background: var(--gradient-cyan-blue);
+      color: #04101e;
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+    }
+
+    .msg-bubble {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 0.85rem 1.1rem;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      max-width: 90%;
+    }
+
+    .msg-user .msg-bubble {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.25);
+    }
+
+    /* Tool Call Card inside Assistant Msg */
+    .tool-call-card {
+      margin-top: 0.75rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      border-radius: 8px;
+      overflow: hidden;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .tool-call-header {
+      background: rgba(0, 229, 255, 0.1);
+      padding: 0.45rem 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+
+    .tool-call-body {
+      padding: 0.65rem 0.8rem;
+      font-size: 0.78rem;
+      color: #94a3b8;
+      overflow-x: auto;
+    }
+
+    .code-json {
+      color: #38bdf8;
+    }
+
+    /* Right side: Technical Anatomy & Guardrails */
+    .tech-pane {
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.15);
+      border-left: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .tech-block h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .tech-block p, .tech-block ul {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .tech-block ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .tech-block ul li {
+      position: relative;
+      padding-left: 1.25rem;
+    }
+
+    .tech-block ul li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .rule-box {
+      background: rgba(168, 85, 247, 0.08);
+      border: 1px solid rgba(168, 85, 247, 0.25);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.84rem;
+      color: #e9d5ff;
+    }
+
+    .rule-box strong {
+      color: #fff;
+    }
+
+    /* Command Cheatsheet */
+    .cheatsheet {
+      margin-top: 3.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.75rem 2rem;
+    }
+
+    .cmd-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .cmd-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .cmd-card-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+
+    .cmd-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      background: #000;
+      padding: 0.6rem 0.8rem;
+      border-radius: 6px;
+      color: #38bdf8;
+      word-break: break-all;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #1e293b;
+      border: 1px solid var(--accent-cyan);
+      color: #fff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .stats-grid, .team-bar, .cmd-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .scenario-body {
+        grid-template-columns: 1fr;
+        divide-x: none;
+      }
+      .tech-pane {
+        border-left: none;
+        border-top: 1px solid var(--border-subtle);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stats-grid, .team-bar, .cmd-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero h1 {
+        font-size: 2.1rem;
+      }
+      header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="brand-icon">🛠️</div>
+        <div>
+          <div class="brand-title">Northstar Labs — <span>IT Helpdesk Agent</span></div>
+          <div class="brand-subtitle">Interactive Demo Presentation • Day 04 Lab Showcase</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="btn-run-streamlit" class="btn btn-primary" onclick="copyStreamlitCmd()">
+          <span>⚡</span> Khởi chạy Web UI
+        </button>
+        <a href="https://github.com/ratrichero/K4-Day04-02560-TaVietCuong" target="_blank" class="btn btn-outline">
+          <span>📂</span> GitHub Repo
+        </a>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-badge">Day 04 Lab Final Deliverable • Production Ready</div>
+      <h1>Trình Diễn 4 Kịch Bản <span>Helpdesk Agent</span></h1>
+      <p>Hệ thống AI Agent hỗ trợ CNTT doanh nghiệp với khả năng Tool Calling song song, ranh giới bảo mật nghiêm ngặt và tỷ lệ chính xác đánh giá đạt 100%.</p>
+    </section>
+
+    <!-- Stats Matrix -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value">100<span style="font-size:1.3rem">%</span> <span class="stat-badge">+36.7%</span></div>
+        <div class="stat-label">Độ chính xác Eval Base (v3)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">10/10 <span class="stat-badge">100%</span></div>
+        <div class="stat-label">Bộ Eval nhóm (eval_group.json)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">10 <span class="stat-badge">Tools</span></div>
+        <div class="stat-label">9 Core Tools + 1 Bonus Tool</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">0 <span class="stat-badge" style="background:rgba(59,130,246,0.2);color:#60a5fa">Clean</span></div>
+        <div class="stat-label">Provider Errors / Crashes</div>
+      </div>
+    </section>
+
+    <!-- Team Members Bar -->
+    <section class="team-bar">
+      <div class="team-member">
+        <div class="avatar">TC</div>
+        <div class="member-info">
+          <h4>Tạ Việt Cường (02560)</h4>
+          <p>Prompt Architect • Team Lead</p>
+        </div>
+      </div>
+      <div class="team-member">
+        <div class="avatar">CD</div>
+        <div class="member-info">
+          <h4>Chung Văn Duy (02854)</h4>
+          <p>Tool & Schema Engineer</p>
+        </div>
+      </div>
+      <div class="team-member">
+        <div class="avatar">DK</div>
+        <div class="member-info">
+          <h4>Dương Đạt Khang (02624)</h4>
+          <p>Eval & Red-Team Specialist</p>
+        </div>
+      </div>
+      <div class="team-member">
+        <div class="avatar">TC</div>
+        <div class="member-info">
+          <h4>Trần Ngọc Chinh (02720)</h4>
+          <p>UI & Report Coordinator</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scenario Navigation Tabs -->
+    <div class="section-header">
+      <div>
+        <div class="section-title">Kịch Bản Trình Diễn Chi Tiết</div>
+        <div class="section-subtitle">Bấm chọn từng kịch bản để xem phân tích kỹ thuật và mô phỏng phản hồi thời gian thực</div>
+      </div>
+    </div>
+
+    <div class="scenario-tabs">
+      <button class="tab-btn active" onclick="switchScenario(1)">
+        <span class="tab-number">1</span>
+        <span>Parallel Tool Calling</span>
+      </button>
+      <button class="tab-btn" onclick="switchScenario(2)">
+        <span class="tab-number">2</span>
+        <span>Safety Boundary & Clarify</span>
+      </button>
+      <button class="tab-btn" onclick="switchScenario(3)">
+        <span class="tab-number">3</span>
+        <span>Anti-Hallucination (ID)</span>
+      </button>
+      <button class="tab-btn" onclick="switchScenario(4)">
+        <span class="tab-number">4</span>
+        <span>Bonus: Check Ticket Status</span>
+      </button>
+    </div>
+
+    <!-- Scenario 1: Parallel Calling -->
+    <div id="scenario-1" class="scenario-card active">
+      <div class="scenario-header">
+        <div>
+          <div class="scenario-meta">
+            <span class="tag tag-blue">Kịch Bản 1</span>
+            <span class="tag tag-emerald">Mandatory Parallel Tool Execution</span>
+            <span class="tag tag-purple">Multi-Environment</span>
+          </div>
+          <div class="scenario-title">Kiểm Tra Song Song Đa Môi Trường (Production & Staging)</div>
+        </div>
+        <button class="btn btn-primary" onclick="simulateChat(1)">
+          <span>▶️</span> Mô phỏng Chat
+        </button>
+      </div>
+
+      <div class="scenario-body">
+        <div class="chat-sim-pane">
+          <div class="prompt-box">
+            <div class="prompt-box-header">
+              <span class="prompt-box-title">Câu lệnh người dùng (User Prompt)</span>
+              <button class="copy-btn" onclick="copyPromptText('p1')">📋 Sao chép</button>
+            </div>
+            <div id="p1" class="prompt-text">
+              "VPN production mình đã kiểm tra rồi. Bây giờ kiểm tra giúp mình trạng thái VPN staging và SSO production."
+            </div>
+          </div>
+
+          <div class="chat-display" id="chat-display-1">
+            <div class="chat-msg msg-user">
+              <div class="msg-avatar">U</div>
+              <div class="msg-bubble">VPN production mình đã kiểm tra rồi. Bây giờ kiểm tra giúp mình trạng thái VPN staging và SSO production.</div>
+            </div>
+            <div class="chat-msg msg-assistant" id="assistant-res-1">
+              <div class="msg-avatar">🤖</div>
+              <div class="msg-bubble">
+                Đang chờ thực thi mô phỏng... Bấm nút <strong>"Mô phỏng Chat"</strong> phía trên để xem tương tác.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tech-pane">
+          <div class="tech-block">
+            <h4>🎯 Mục tiêu kỹ thuật</h4>
+            <p>Kiểm tra năng lực thực thi đồng thời nhiều công cụ trong cùng một turn trả lời của Agent, đồng thời loại trừ môi trường đã được người dùng xác nhận là đã kiểm tra.</p>
+          </div>
+
+          <div class="tech-block">
+            <h4>⚙️ Phân luồng công cụ kỳ vọng</h4>
+            <ul>
+              <li><strong>Tool 1:</strong> <code>check_service_status(service="vpn", environment="staging")</code></li>
+              <li><strong>Tool 2:</strong> <code>check_service_status(service="sso", environment="production")</code></li>
+              <li><strong>Tuyệt đối không:</strong> Gọi thừa VPN production hoặc chỉ gọi 1 tool rồi dừng.</li>
+            </ul>
+          </div>
+
+          <div class="rule-box">
+            <strong>System Prompt Rule áp dụng:</strong><br>
+            <em>"Khi người dùng yêu cầu kiểm tra nhiều môi trường hoặc nhiều dịch vụ, Agent BẮT BUỘC phát đồng thời 2-3 tool calls trong cùng 1 turn (parallel tool execution), không được chia nhỏ lượt hỏi."</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario 2: Safety Boundary -->
+    <div id="scenario-2" class="scenario-card">
+      <div class="scenario-header">
+        <div>
+          <div class="scenario-meta">
+            <span class="tag tag-amber">Kịch Bản 2</span>
+            <span class="tag tag-purple">State Mutation Boundary</span>
+            <span class="tag tag-blue">Clarify Yes/No</span>
+          </div>
+          <div class="scenario-title">Ranh Giới An Toàn Ghi Hệ Thống & Xác Nhận Đa Lượt</div>
+        </div>
+        <button class="btn btn-primary" onclick="simulateChat(2)">
+          <span>▶️</span> Mô phỏng Chat
+        </button>
+      </div>
+
+      <div class="scenario-body">
+        <div class="chat-sim-pane">
+          <div class="prompt-box">
+            <div class="prompt-box-header">
+              <span class="prompt-box-title">Lượt 1: Yêu cầu tạo Ticket mới</span>
+              <button class="copy-btn" onclick="copyPromptText('p2_1')">📋 Sao chép</button>
+            </div>
+            <div id="p2_1" class="prompt-text">
+              "Màn hình laptop LT-411 của mình bị sọc xanh và nhấp nháy liên tục, tạo ticket hỗ trợ mức độ cao giúp mình."
+            </div>
+          </div>
+
+          <div class="prompt-box" style="margin-top:-0.5rem">
+            <div class="prompt-box-header">
+              <span class="prompt-box-title">Lượt 2: Người dùng đồng ý</span>
+              <button class="copy-btn" onclick="copyPromptText('p2_2')">📋 Sao chép</button>
+            </div>
+            <div id="p2_2" class="prompt-text">
+              "Đồng ý, tạo ticket ngay giúp mình."
+            </div>
+          </div>
+
+          <div class="chat-display" id="chat-display-2">
+            <div class="chat-msg msg-user">
+              <div class="msg-avatar">U</div>
+              <div class="msg-bubble">Màn hình laptop LT-411 của mình bị sọc xanh và nhấp nháy liên tục, tạo ticket hỗ trợ mức độ cao giúp mình.</div>
+            </div>
+            <div class="chat-msg msg-assistant" id="assistant-res-2">
+              <div class="msg-avatar">🤖</div>
+              <div class="msg-bubble">
+                Đang chờ thực thi mô phỏng... Bấm nút <strong>"Mô phỏng Chat"</strong> để chạy tiến trình 2 lượt.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tech-pane">
+          <div class="tech-block">
+            <h4>🎯 Mục tiêu kỹ thuật</h4>
+            <p>Ngăn chặn hành vi tự ý ghi dữ liệu vào hệ thống IT Service Desk khi chưa có sự xác nhận chủ động từ người dùng (Confirmation Guardrail).</p>
+          </div>
+
+          <div class="tech-block">
+            <h4>⚙️ Hành vi ranh giới</h4>
+            <ul>
+              <li><strong>Lượt 1:</strong> Bắt buộc gọi <code>clarify(response_type="yes_no")</code>. KHÔNG ĐƯỢC gọi <code>create_ticket</code> ngay.</li>
+              <li><strong>Lượt 2:</strong> Sau khi user nói "Đồng ý", mới được gọi <code>create_ticket(summary=..., priority="high", asset_id="LT-411", confirmed=True)</code>.</li>
+            </ul>
+          </div>
+
+          <div class="rule-box">
+            <strong>System Prompt Rule áp dụng:</strong><br>
+            <em>"Mọi hành động có side-effect ghi hệ thống (như create_ticket) bắt buộc phải qua bước clarify(response_type='yes_no'). Tuyệt đối không tự suy diễn confirmed=True khi chưa có câu trả lời xác nhận."</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario 3: Anti-Hallucination -->
+    <div id="scenario-3" class="scenario-card">
+      <div class="scenario-header">
+        <div>
+          <div class="scenario-meta">
+            <span class="tag tag-purple">Kịch Bản 3</span>
+            <span class="tag tag-amber">Anti-Hallucination Guardrail</span>
+            <span class="tag tag-blue">Incomplete Identifier</span>
+          </div>
+          <div class="scenario-title">Chống Ảo Giác Khi Thiếu Mã Định Danh (Incomplete ID)</div>
+        </div>
+        <button class="btn btn-primary" onclick="simulateChat(3)">
+          <span>▶️</span> Mô phỏng Chat
+        </button>
+      </div>
+
+      <div class="scenario-body">
+        <div class="chat-sim-pane">
+          <div class="prompt-box">
+            <div class="prompt-box-header">
+              <span class="prompt-box-title">Câu lệnh người dùng (User Prompt)</span>
+              <button class="copy-btn" onclick="copyPromptText('p3')">📋 Sao chép</button>
+            </div>
+            <div id="p3" class="prompt-text">
+              "Kiểm tra network trên laptop của mình. Nhãn tem bị mờ, mình chỉ đọc được 'LT-4', chưa biết các ký tự còn lại."
+            </div>
+          </div>
+
+          <div class="chat-display" id="chat-display-3">
+            <div class="chat-msg msg-user">
+              <div class="msg-avatar">U</div>
+              <div class="msg-bubble">Kiểm tra network trên laptop của mình. Nhãn tem bị mờ, mình chỉ đọc được 'LT-4', chưa biết các ký tự còn lại.</div>
+            </div>
+            <div class="chat-msg msg-assistant" id="assistant-res-3">
+              <div class="msg-avatar">🤖</div>
+              <div class="msg-bubble">
+                Đang chờ thực thi mô phỏng... Bấm nút <strong>"Mô phỏng Chat"</strong> phía trên để xem tương tác.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tech-pane">
+          <div class="tech-block">
+            <h4>🎯 Mục tiêu kỹ thuật</h4>
+            <p>Ngăn chặn điểm yếu kinh điển của LLM là tự tiện "đoán mò" và hoàn thiện chuỗi ID (ví dụ tự biến <code>LT-4</code> thành <code>LT-411</code> hoặc <code>LT-401</code>) dẫn tới sai lệch dữ liệu chẩn đoán thiết bị người dùng khác.</p>
+          </div>
+
+          <div class="tech-block">
+            <h4>⚙️ Phân luồng công cụ kỳ vọng</h4>
+            <ul>
+              <li><strong>Gọi công cụ:</strong> <code>clarify(response_type="text")</code></li>
+              <li><strong>Yêu cầu người dùng:</strong> Cung cấp mã Asset ID đầy đủ hoặc tra cứu qua mã nhân viên (Employee ID).</li>
+              <li><strong>Tuyệt đối cấm:</strong> Gọi <code>inspect_device(asset_id="LT-4")</code> hoặc tự bịa ra <code>LT-411</code>.</li>
+            </ul>
+          </div>
+
+          <div class="rule-box">
+            <strong>System Prompt Rule áp dụng:</strong><br>
+            <em>"Khi định danh tài sản (asset_id) hoặc nhân viên bị thiếu ký tự, không đủ format hợp lệ, Agent TUYỆT ĐỐI KHÔNG tự bổ sung hay suy đoán. Phải gọi clarify để hỏi lại mã hoàn chỉnh."</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario 4: Bonus Tool -->
+    <div id="scenario-4" class="scenario-card">
+      <div class="scenario-header">
+        <div>
+          <div class="scenario-meta">
+            <span class="tag tag-emerald">Kịch Bản 4</span>
+            <span class="tag tag-blue">Bonus Tool Contribution</span>
+            <span class="tag tag-purple">Mock Store & Security</span>
+          </div>
+          <div class="scenario-title">Tính Năng Mở Rộng: Tra Cứu Tiến Độ Sự Cố (check_ticket_status)</div>
+        </div>
+        <button class="btn btn-primary" onclick="simulateChat(4)">
+          <span>▶️</span> Mô phỏng Chat
+        </button>
+      </div>
+
+      <div class="scenario-body">
+        <div class="chat-sim-pane">
+          <div class="prompt-box">
+            <div class="prompt-box-header">
+              <span class="prompt-box-title">Câu lệnh người dùng (User Prompt)</span>
+              <button class="copy-btn" onclick="copyPromptText('p4')">📋 Sao chép</button>
+            </div>
+            <div id="p4" class="prompt-text">
+              "Kiểm tra giúp mình tiến độ xử lý của ticket sự cố INC-1042 xem đã giải quyết xong chưa."
+            </div>
+          </div>
+
+          <div class="chat-display" id="chat-display-4">
+            <div class="chat-msg msg-user">
+              <div class="msg-avatar">U</div>
+              <div class="msg-bubble">Kiểm tra giúp mình tiến độ xử lý của ticket sự cố INC-1042 xem đã giải quyết xong chưa.</div>
+            </div>
+            <div class="chat-msg msg-assistant" id="assistant-res-4">
+              <div class="msg-avatar">🤖</div>
+              <div class="msg-bubble">
+                Đang chờ thực thi mô phỏng... Bấm nút <strong>"Mô phỏng Chat"</strong> phía trên để xem tương tác.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tech-pane">
+          <div class="tech-block">
+            <h4>🎯 Mục tiêu kỹ thuật</h4>
+            <p>Trình diễn công cụ mở rộng (Bonus Tool) do thành viên Chung Văn Duy đóng góp, kết nối kho dữ liệu sự cố <code>helpdesk_data/tickets.json</code> và các ticket cục bộ <code>tickets/LAB-*.json</code>.</p>
+          </div>
+
+          <div class="tech-block">
+            <h4>⚙️ Phân luồng & Bảo mật</h4>
+            <ul>
+              <li><strong>Gọi công cụ:</strong> <code>check_ticket_status(ticket_id="INC-1042")</code></li>
+              <li><strong>Tích hợp Guardrail:</strong> Regex chặn truyền thông tin nhạy cảm (mật khẩu, token) vào chuỗi truy vấn ticket ID.</li>
+              <li><strong>Kết quả:</strong> Trả về trạng thái xử lý <code>in_progress</code>, đội ngũ phụ trách và ghi chú tiến độ.</li>
+            </ul>
+          </div>
+
+          <div class="rule-box">
+            <strong>Đóng góp của Tool Engineer (Chung Văn Duy):</strong><br>
+            <em>"Khai báo hoàn chỉnh schema trong tools.yaml, triển khai mã nguồn Python chuẩn mực với error handling và kiểm định guardrail ngăn rò rỉ credential."</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commands Quick Run Bar -->
+    <section class="cheatsheet">
+      <div class="section-title" style="font-size:1.25rem">💻 Lệnh Khởi Chạy Nhanh Cho Demo Trực Tiếp</div>
+      <div class="cmd-grid">
+        <div class="cmd-card">
+          <div class="cmd-card-title">1. Web UI Chat Tương Tác (Streamlit)</div>
+          <div class="cmd-code">.\.venv\Scripts\python.exe -m streamlit run app.py</div>
+          <button class="btn btn-outline" style="padding:0.4rem;font-size:0.78rem" onclick="copyText('.\\.venv\\Scripts\\python.exe -m streamlit run app.py')">📋 Copy lệnh</button>
+        </div>
+        <div class="cmd-card">
+          <div class="cmd-card-title">2. Chạy Harness Eval Nhóm (10 Cases)</div>
+          <div class="cmd-code">.\.venv\Scripts\python.exe run_eval.py --provider gemini --version v3 --suite group --eval-cases data/eval_group.json</div>
+          <button class="btn btn-outline" style="padding:0.4rem;font-size:0.78rem" onclick="copyText('.\\.venv\\Scripts\\python.exe run_eval.py --provider gemini --version v3 --suite group --eval-cases data/eval_group.json')">📋 Copy lệnh</button>
+        </div>
+        <div class="cmd-card">
+          <div class="cmd-card-title">3. Live Chat Trong Terminal (CLI)</div>
+          <div class="cmd-code">.\.venv\Scripts\python.exe chat.py --provider gemini --version v3</div>
+          <button class="btn btn-outline" style="padding:0.4rem;font-size:0.78rem" onclick="copyText('.\\.venv\\Scripts\\python.exe chat.py --provider gemini --version v3')">📋 Copy lệnh</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>K4 Cohort — Day 04 IT Helpdesk Agent • Repository: <strong>K4-Day04-02560-TaVietCuong</strong></p>
+      <p style="margin-top:0.3rem;font-size:0.8rem">Được chuẩn bị bởi: Tạ Việt Cường (02560), Chung Văn Duy (02854), Dương Đạt Khang (02624), Trần Ngọc Chinh (02720)</p>
+    </footer>
+
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast" class="toast">
+    <span>✅</span>
+    <span id="toast-text">Đã sao chép vào bộ nhớ tạm!</span>
+  </div>
+
+  <script>
+    // Tab switching
+    function switchScenario(index) {
+      document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === (index - 1));
+      });
+      document.querySelectorAll('.scenario-card').forEach((card, idx) => {
+        card.classList.toggle('active', idx === (index - 1));
+      });
+    }
+
+    // Toast feedback
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastText = document.getElementById('toast-text');
+      toastText.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    // Copy prompt text
+    function copyPromptText(elementId) {
+      const el = document.getElementById(elementId);
+      if (el) {
+        navigator.clipboard.writeText(el.innerText.replace(/"/g, '').trim()).then(() => {
+          showToast("Đã copy Prompt để paste vào Live Demo!");
+        });
+      }
+    }
+
+    // Copy general text
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast("Đã copy lệnh Terminal!");
+      });
+    }
+
+    function copyStreamlitCmd() {
+      copyText(".\\.venv\\Scripts\\python.exe -m streamlit run app.py");
+    }
+
+    // Interactive Chat Simulation
+    function simulateChat(scenarioId) {
+      if (scenarioId === 1) {
+        const resEl = document.getElementById('assistant-res-1');
+        resEl.innerHTML = `
+          <div class="msg-avatar">🤖</div>
+          <div class="msg-bubble">
+            <div style="color:var(--text-muted);font-size:0.82rem;margin-bottom:0.5rem">⚡ Đang thực thi 2 Tool Calls song song...</div>
+            
+            <div class="tool-call-card">
+              <div class="tool-call-header">
+                <span>🔧 Tool Call 1: check_service_status</span>
+                <span>STATUS: OPERATIONAL</span>
+              </div>
+              <div class="tool-call-body">
+                args: <span class="code-json">{"service": "vpn", "environment": "staging"}</span>
+              </div>
+            </div>
+
+            <div class="tool-call-card" style="margin-top:0.5rem">
+              <div class="tool-call-header">
+                <span>🔧 Tool Call 2: check_service_status</span>
+                <span>STATUS: OPERATIONAL</span>
+              </div>
+              <div class="tool-call-body">
+                args: <span class="code-json">{"service": "sso", "environment": "production"}</span>
+              </div>
+            </div>
+
+            <div style="margin-top:0.85rem;line-height:1.5">
+              Chào bạn, mình đã kiểm tra trạng thái hai dịch vụ theo yêu cầu:<br>
+              • <strong>VPN (staging):</strong> Đang hoạt động bình thường (Operational), độ trễ 18ms.<br>
+              • <strong>SSO (production):</strong> Đang hoạt động ổn định 100%, không ghi nhận sự cố gián đoạn đăng nhập.<br>
+              <em>(Lưu ý: Môi trường VPN production đã được loại trừ theo yêu cầu của bạn).</em>
+            </div>
+          </div>
+        `;
+        showToast("Mô phỏng Kịch bản 1: Gọi 2 tool song song thành công!");
+      } else if (scenarioId === 2) {
+        const resEl = document.getElementById('assistant-res-2');
+        resEl.innerHTML = `
+          <div class="msg-avatar">🤖</div>
+          <div class="msg-bubble">
+            <div style="color:var(--text-muted);font-size:0.82rem;margin-bottom:0.5rem">🛡️ Kiểm tra ranh giới: Chưa xác nhận -> Gọi Clarify (yes_no)</div>
+            
+            <div class="tool-call-card">
+              <div class="tool-call-header">
+                <span>🔒 Guardrail Call: clarify</span>
+                <span>ACTION: CONFIRMATION REQUIRED</span>
+              </div>
+              <div class="tool-call-body">
+                args: <span class="code-json">{"response_type": "yes_no"}</span>
+              </div>
+            </div>
+
+            <div style="margin-top:0.75rem;line-height:1.5">
+              Mình đã ghi nhận sự cố màn hình laptop <strong>LT-411</strong> bị sọc xanh và nhấp nháy.<br>
+              Thông tin ticket dự kiến tạo:<br>
+              - <strong>Tiêu đề:</strong> Màn hình laptop LT-411 bị sọc xanh và nhấp nháy liên tục<br>
+              - <strong>Mã thiết bị:</strong> LT-411<br>
+              - <strong>Độ ưu tiên:</strong> High<br>
+              👉 <strong>Bạn có xác nhận tạo ticket này trên hệ thống không? (Có / Không)</strong>
+            </div>
+
+            <div style="margin-top:1rem;padding-top:0.75rem;border-top:1px dashed var(--border-subtle)">
+              <div style="font-size:0.8rem;color:#34d399;margin-bottom:0.4rem">✔ [Lượt 2]: Người dùng trả lời "Đồng ý, tạo ticket ngay giúp mình"</div>
+              
+              <div class="tool-call-card">
+                <div class="tool-call-header">
+                  <span>🚀 Execute Mutation: create_ticket</span>
+                  <span>TICKET CREATED</span>
+                </div>
+                <div class="tool-call-body">
+                  args: <span class="code-json">{"asset_id": "LT-411", "confirmed": true, "priority": "high", "summary": "Màn hình laptop LT-411 bị sọc xanh và nhấp nháy liên tục"}</span>
+                </div>
+              </div>
+              
+              <div style="margin-top:0.6rem">
+                ✅ Ticket hỗ trợ kỹ thuật của bạn đã được khởi tạo thành công với mã: <strong>LAB-94821</strong> (Mức độ ưu tiên: High). Đội ngũ IT Helpdesk đã tiếp nhận và sẽ liên hệ hỗ trợ bạn sớm nhất!
+              </div>
+            </div>
+          </div>
+        `;
+        showToast("Mô phỏng Kịch bản 2: Bảo vệ ranh giới tạo ticket thành công!");
+      } else if (scenarioId === 3) {
+        const resEl = document.getElementById('assistant-res-3');
+        resEl.innerHTML = `
+          <div class="msg-avatar">🤖</div>
+          <div class="msg-bubble">
+            <div style="color:var(--text-muted);font-size:0.82rem;margin-bottom:0.5rem">🛑 Nhận diện ID thiếu ký tự: Chặn suy diễn ảo giác</div>
+            
+            <div class="tool-call-card">
+              <div class="tool-call-header">
+                <span>⚠️ Anti-Hallucination Guardrail: clarify</span>
+                <span>MISSING INFO</span>
+              </div>
+              <div class="tool-call-body">
+                args: <span class="code-json">{"response_type": "text"}</span>
+              </div>
+            </div>
+
+            <div style="margin-top:0.75rem;line-height:1.5">
+              Mã máy <strong>"LT-4"</strong> hiện đang bị thiếu các ký tự định danh nên hệ thống chưa thể xác định chính xác thiết bị của bạn (định dạng chuẩn gồm 5-6 ký tự, ví dụ: <em>LT-411</em>, <em>LT-204</em>).<br><br>
+              Bạn vui lòng cung cấp mã Asset ID đầy đủ in dưới thân máy, hoặc cho mình xin <strong>Mã nhân viên (Employee ID)</strong> để mình hỗ trợ tra cứu danh sách thiết bị được cấp nhé!
+            </div>
+          </div>
+        `;
+        showToast("Mô phỏng Kịch bản 3: Ngăn chặn ảo giác ID thành công!");
+      } else if (scenarioId === 4) {
+        const resEl = document.getElementById('assistant-res-4');
+        resEl.innerHTML = `
+          <div class="msg-avatar">🤖</div>
+          <div class="msg-bubble">
+            <div style="color:var(--text-muted);font-size:0.82rem;margin-bottom:0.5rem">🎁 Gọi Bonus Tool: check_ticket_status</div>
+            
+            <div class="tool-call-card">
+              <div class="tool-call-header">
+                <span>📦 Bonus Tool Call: check_ticket_status</span>
+                <span>STORE: helpdesk_data/tickets.json</span>
+              </div>
+              <div class="tool-call-body">
+                args: <span class="code-json">{"ticket_id": "INC-1042"}</span>
+              </div>
+            </div>
+
+            <div style="margin-top:0.75rem;line-height:1.5">
+              Mình đã tra cứu hệ thống sự cố cho mã <strong>INC-1042</strong>, thông tin chi tiết như sau:<br>
+              • <strong>Tiêu đề:</strong> Sự cố gián đoạn đường truyền VPN chi nhánh Đà Nẵng<br>
+              • <strong>Trạng thái:</strong> <span style="color:#fbbf24;font-weight:700">IN PROGRESS (Đang xử lý)</span><br>
+              • <strong>Mức độ ưu tiên:</strong> High<br>
+              • <strong>Đội ngũ xử lý:</strong> Network Operations & DevOps Tier 2<br>
+              • <strong>Cập nhật mới nhất:</strong> Đã chuyển tuyến dự phòng qua gateway phụ, đang tiến hành reset tunnel router chính. Dự kiến hoàn tất trong 30 phút.
+            </div>
+          </div>
+        `;
+        showToast("Mô phỏng Kịch bản 4: Gọi Bonus Tool tra cứu sự cố thành công!");
+      }
+    }
+  </script>
+</body>
+</html>
